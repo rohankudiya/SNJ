@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>सिध्दार्थ नगरची जगदंबा &mdash; T-shirt Size Collection</title>
+<meta name="description" content="Submit your T-shirt size and your family member's size, and preview the latest T-shirt design.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d1b3e'/%3E%3Ctext x='50' y='63' font-size='42' text-anchor='middle' fill='%23ff9933' font-family='Arial' font-weight='bold'%3ES%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<!-- ========== HEADER ========== -->
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a href="#top" class="brand">
+      <span class="brand-logo-badge">
+        <img src="assets/jagdamb-logo-header.png" alt="Jagdamb emblem" class="brand-logo-img" width="143" height="192">
+      </span>
+      <span class="brand-name">सिध्दार्थ नगरची जगदंबा</span>
+    </a>
+
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="primaryNav" aria-label="Toggle navigation menu">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+
+    <nav class="primary-nav" id="primaryNav" aria-label="Primary">
+      <ul>
+        <li><a href="#top" class="nav-link">Home</a></li>
+        <li><a href="#preview" class="nav-link">T-shirt Preview</a></li>
+        <li><a href="#submit" class="nav-link nav-link-cta">Submit Details</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-emblem-badge">
+        <img src="assets/siddharth-nagar-logo-hero.png" alt="Siddharth Nagarchi Jagdamba emblem" class="hero-emblem-img" width="559" height="480" loading="eager">
+      </div>
+      <p class="eyebrow">सिध्दार्थ नगरची जगदंबा &mdash; Event T-shirt Drive</p>
+      <h1 class="hero-heading">T-shirt Size Collection</h1>
+      <p class="hero-copy">
+        Please submit your own T-shirt size. You can also add sizes for your
+        family members (up to 5) if you'd like. Pick a letter size, or an
+        age bracket for kids — it only takes a minute.
+      </p>
+      <div class="hero-actions">
+        <a href="#submit" class="btn btn-primary">Submit Your Details</a>
+        <a href="#preview" class="btn btn-secondary">View T-shirt Design</a>
+      </div>
+    </div>
+    <div class="hero-decor" aria-hidden="true"></div>
+  </section>
+
+  <!-- ========== T-SHIRT PREVIEW ========== -->
+  <section class="preview-section" id="preview">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Design Preview</p>
+        <h2>T-shirt Preview</h2>
+        <p class="section-copy">Take a look at the latest T-shirt design below.</p>
+      </div>
+
+      <div class="gallery-wrap">
+        <div class="gallery-main">
+          <button class="gallery-main-btn" id="galleryMainBtn" aria-label="Open image in full screen">
+            <img id="galleryMainImage" src="assets/tshirt-placeholder.jpg" alt="Latest T-shirt design front view" loading="eager">
+          </button>
+          <p class="gallery-unavailable" id="galleryUnavailable" hidden>T-shirt photo will be uploaded soon.</p>
+          <span class="zoom-hint" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M11 8V14M8 11H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Tap to zoom
+          </span>
+        </div>
+
+        <div class="gallery-thumbs" id="galleryThumbs" role="tablist" aria-label="T-shirt views">
+          <!-- populated by script.js from assets/config.js -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LIGHTBOX ========== -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="T-shirt image, full screen" hidden>
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close full screen image">&times;</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image">&#8249;</button>
+    <img class="lightbox-image" id="lightboxImage" src="" alt="">
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image">&#8250;</button>
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+
+  <!-- ========== SIZE GUIDE MODAL ========== -->
+  <div class="size-guide-modal" id="sizeGuideModal" role="dialog" aria-modal="true" aria-labelledby="sizeGuideTitle" hidden>
+    <div class="size-guide-panel">
+      <button type="button" class="size-guide-close" id="sizeGuideClose" aria-label="Close size guide">&times;</button>
+      <h3 id="sizeGuideTitle">Size Guide</h3>
+      <p class="size-guide-intro">Approximate chest measurements for each adult size — use these to figure out which letter size fits best.</p>
+      <div class="size-guide-table-wrap">
+        <table class="size-guide-table">
+          <thead>
+            <tr><th>Label</th><th>Chest (inches)</th><th>Chest (cm)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>XS</td><td>36</td><td>91</td></tr>
+            <tr><td>S</td><td>38</td><td>97</td></tr>
+            <tr><td>M</td><td>40</td><td>102</td></tr>
+            <tr><td>L</td><td>42</td><td>107</td></tr>
+            <tr><td>XL</td><td>44</td><td>112</td></tr>
+            <tr><td>XXL</td><td>46</td><td>117</td></tr>
+            <tr><td>3XL</td><td>48</td><td>122</td></tr>
+            <tr><td>4XL</td><td>50</td><td>127</td></tr>
+            <tr><td>5XL</td><td>52</td><td>132</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="size-guide-note">For kids, pick the age bracket from the Kids group instead — it's more reliable than a chest measurement for growing kids.</p>
+    </div>
+  </div>
+
+  <!-- ========== SUBMIT DETAILS ========== -->
+  <section class="submit-section" id="submit">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Almost There</p>
+        <h2>Submit Your Details</h2>
+        <p class="section-copy">
+          Fields marked <span class="required-mark">*</span> are required. Your own details are required;
+          adding family members below is optional — fill in as many as apply to you.
+        </p>
+      </div>
+
+      <form
+        method="POST"
+        class="tshirt-form"
+        id="tshirtForm"
+        novalidate
+      >
+        <!-- Spam check only; actual Netlify submission target is the
+             hidden #netlifyFormDetector form below (see comment there). -->
+        <p class="honeypot-field">
+          <label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+        </p>
+
+        <div class="form-status" id="formStatus" role="status" aria-live="polite" hidden></div>
+
+        <!-- ===== YOUR DETAILS ===== -->
+        <fieldset class="form-fieldset">
+          <legend>
+            <span class="legend-index">1</span>
+            <span>Your Details</span>
+          </legend>
+
+          <div class="form-row">
+            <label for="user_name">Your Full Name <span class="required-mark" aria-hidden="true">*</span></label>
+            <input type="text" id="user_name" name="user_name" placeholder="e.g. Aditi Sharma" autocomplete="name" required aria-required="true">
+            <span class="field-error" id="err-user_name" role="alert"></span>
+          </div>
+
+          <div class="form-row">
+            <span class="group-label" id="user_tshirt_size_label">Your T-shirt Size <span class="required-mark" aria-hidden="true">*</span></span>
+            <div class="size-chip-field" id="user_tshirt_size_chips" data-size-target="user_tshirt_size" role="group" aria-labelledby="user_tshirt_size_label"></div>
+            <input type="hidden" id="user_tshirt_size" name="user_tshirt_size">
+            <button type="button" class="size-guide-link" data-open-size-guide>View size guide</button>
+            <span class="field-error" id="err-user_tshirt_size" role="alert"></span>
+          </div>
+        </fieldset>
+
+        <!-- ===== FAMILY MEMBER DETAILS (repeatable, up to 5) ===== -->
+        <fieldset class="form-fieldset family-member-block" id="family-block-1" data-index="1">
+          <legend>
+            <span class="legend-index">2</span>
+            <span>Family Member 1&rsquo;s Details</span>
+            <span class="optional-mark">(optional)</span>
+          </legend>
+
+          <div class="form-row">
+            <label for="family_member_1_name">Family Member 1&rsquo;s Full Name</label>
+            <input type="text" id="family_member_1_name" name="family_member_1_name" placeholder="e.g. Rohan Sharma" autocomplete="off">
+            <span class="field-error" id="err-family_member_1_name" role="alert"></span>
+          </div>
+
+          <div class="form-row">
+            <span class="group-label" id="family_member_1_tshirt_size_label">Family Member 1&rsquo;s T-shirt Size <span class="required-mark" aria-hidden="true">*</span></span>
+            <div class="size-chip-field" id="family_member_1_tshirt_size_chips" data-size-target="family_member_1_tshirt_size" role="group" aria-labelledby="family_member_1_tshirt_size_label"></div>
+            <input type="hidden" id="family_member_1_tshirt_size" name="family_member_1_tshirt_size">
+            <button type="button" class="size-guide-link" data-open-size-guide>View size guide</button>
+            <span class="field-error" id="err-family_member_1_tshirt_size" role="alert"></span>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-fieldset family-member-block" id="family-block-2" data-index="2" hidden>
+          <legend>
+            <span class="legend-index">3</span>
+            <span>Family Member 2&rsquo;s Details</span>
+          </legend>
+            <button type="button" class="remove-member-btn" data-remove-index="2" aria-label="Remove Family Member 2">
+              <span aria-hidden="true">&times;</span> Remove
+            </button>
+
+          <div class="form-row">
+            <label for="family_member_2_name">Family Member 2&rsquo;s Full Name <span class="required-mark" aria-hidden="true">*</span></label>
+            <input type="text" id="family_member_2_name" name="family_member_2_name" placeholder="e.g. Rohan Sharma" autocomplete="off">
+            <span class="field-error" id="err-family_member_2_name" role="alert"></span>
+          </div>
+
+          <div class="form-row">
+            <span class="group-label" id="family_member_2_tshirt_size_label">Family Member 2&rsquo;s T-shirt Size <span class="required-mark" aria-hidden="true">*</span></span>
+            <div class="size-chip-field" id="family_member_2_tshirt_size_chips" data-size-target="family_member_2_tshirt_size" role="group" aria-labelledby="family_member_2_tshirt_size_label"></div>
+            <input type="hidden" id="family_member_2_tshirt_size" name="family_member_2_tshirt_size">
+            <button type="button" class="size-guide-link" data-open-size-guide>View size guide</button>
+            <span class="field-error" id="err-family_member_2_tshirt_size" role="alert"></span>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-fieldset family-member-block" id="family-block-3" data-index="3" hidden>
+          <legend>
+            <span class="legend-index">4</span>
+            <span>Family Member 3&rsquo;s Details</span>
+          </legend>
+            <button type="button" class="remove-member-btn" data-remove-index="3" aria-label="Remove Family Member 3">
+              <span aria-hidden="true">&times;</span> Remove
+            </button>
+
+          <div class="form-row">
+            <label for="family_member_3_name">Family Member 3&rsquo;s Full Name <span class="required-mark" aria-hidden="true">*</span></label>
+            <input type="text" id="family_member_3_name" name="family_member_3_name" placeholder="e.g. Rohan Sharma" autocomplete="off">
+            <span class="field-error" id="err-family_member_3_name" role="alert"></span>
+          </div>
+
+          <div class="form-row">
+            <span class="group-label" id="family_member_3_tshirt_size_label">Family Member 3&rsquo;s T-shirt Size <span class="required-mark" aria-hidden="true">*</span></span>
+            <div class="size-chip-field" id="family_member_3_tshirt_size_chips" data-size-target="family_member_3_tshirt_size" role="group" aria-labelledby="family_member_3_tshirt_size_label"></div>
+            <input type="hidden" id="family_member_3_tshirt_size" name="family_member_3_tshirt_size">
+            <button type="button" class="size-guide-link" data-open-size-guide>View size guide</button>
+            <span class="field-error" id="err-family_member_3_tshirt_size" role="alert"></span>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-fieldset family-member-block" id="family-block-4" data-index="4" hidden>
+          <legend>
+            <span class="legend-index">5</span>
+            <span>Family Member 4&rsquo;s Details</span>
+          </legend>
+            <button type="button" class="remove-member-btn" data-remove-index="4" aria-label="Remove Family Member 4">
+              <span aria-hidden="true">&times;</span> Remove
+            </button>
+
+          <div class="form-row">
+            <label for="family_member_4_name">Family Member 4&rsquo;s Full Name <span class="required-mark" aria-hidden="true">*</span></label>
+            <input type="text" id="family_member_4_name" name="family_member_4_name" placeholder="e.g. Rohan Sharma" autocomplete="off">
+            <span class="field-error" id="err-family_member_4_name" role="alert"></span>
+          </div>
+
+          <div class="form-row">
+            <span class="group-label" id="family_member_4_tshirt_size_label">Family Member 4&rsquo;s T-shirt Size <span class="required-mark" aria-hidden="true">*</span></span>
+            <div class="size-chip-field" id="family_member_4_tshirt_size_chips" data-size-target="family_member_4_tshirt_size" role="group" aria-labelledby="family_member_4_tshirt_size_label"></div>
+            <input type="hidden" id="family_member_4_tshirt_size" name="family_member_4_tshirt_size">
+            <button type="button" class="size-guide-link" data-open-size-guide>View size guide</button>
+            <span class="field-error" id="err-family_member_4_tshirt_size" role="alert"></span>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-fieldset family-member-block" id="family-block-5" data-index="5" hidden>
+          <legend>
+            <span class="legend-index">6</span>
+            <span>Family Member 5&rsquo;s Details</span>
+          </legend>
+            <button type="button" class="remove-member-btn" data-remove-index="5" aria-label="Remove Family Member 5">
+              <span aria-hidden="true">&times;</span> Remove
+            </button>
+
+          <div class="form-row">
+            <label for="family_member_5_name">Family Member 5&rsquo;s Full Name <span class="required-mark" aria-hidden="true">*</span></label>
+            <input type="text" id="family_member_5_name" name="family_member_5_name" placeholder="e.g. Rohan Sharma" autocomplete="off">
+            <span class="field-error" id="err-family_member_5_name" role="alert"></span>
+          </div>
+
+          <div class="form-row">
+            <span class="group-label" id="family_member_5_tshirt_size_label">Family Member 5&rsquo;s T-shirt Size <span class="required-mark" aria-hidden="true">*</span></span>
+            <div class="size-chip-field" id="family_member_5_tshirt_size_chips" data-size-target="family_member_5_tshirt_size" role="group" aria-labelledby="family_member_5_tshirt_size_label"></div>
+            <input type="hidden" id="family_member_5_tshirt_size" name="family_member_5_tshirt_size">
+            <button type="button" class="size-guide-link" data-open-size-guide>View size guide</button>
+            <span class="field-error" id="err-family_member_5_tshirt_size" role="alert"></span>
+          </div>
+        </fieldset>
+
+        <div class="add-member-row">
+          <button type="button" class="btn-add-member" id="addMemberBtn">
+            <span class="add-member-icon" aria-hidden="true">+</span>
+            Add Another Family Member
+          </button>
+          <p class="add-member-hint" id="addMemberHint">You can add up to 5 family members per submission. Need to add more than 6 people in total? Just open this page in a new tab and submit again.</p>
+        </div>
+
+        <p class="privacy-note">Your information will only be used for T-shirt size collection.</p>
+
+        <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
+          <span class="btn-label">Submit Details</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+    </div>
+  </section>
+
+
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="brand-logo-badge">
+        <img src="assets/jagdamb-logo-header.png" alt="Jagdamb emblem" class="brand-logo-img" width="143" height="192">
+      </span>
+      <span class="brand-logo-badge">
+        <img src="assets/siddharth-nagar-logo-header.png" alt="Siddharth Nagarchi Jagdamba emblem" class="brand-logo-img" width="223" height="192">
+      </span>
+      <span class="brand-name">सिध्दार्थ नगरची जगदंबा</span>
+    </div>
+    <p class="footer-copyright">&copy; <span id="footerYear"></span> सिध्दार्थ नगरची जगदंबा. All rights reserved.</p>
+    <p class="footer-privacy">Your information will only be used for T-shirt size collection.</p>
+    <p class="footer-contact">Questions? Contact: <a href="mailto:contact@example.com">contact@example.com</a></p>
+  </div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/submission-config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
