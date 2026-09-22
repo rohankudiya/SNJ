@@ -36,23 +36,23 @@ window.TSHIRT_IMAGE_CONFIG = {
     {
       id: "front",
       label: "Front View",
-      src: "assets/tshirt-placeholder.jpg",
+      src: "assets/tshirt-front-photo.jpg",
       alt: "Front view of the SNJ T-shirt design",
-      available: false
+      available: true
     },
     {
       id: "back",
       label: "Back View",
-      src: "assets/tshirt-placeholder.jpg",
+      src: "assets/tshirt-back-photo.jpg",
       alt: "Back view of the SNJ T-shirt design",
-      available: false
+      available: true
     },
     {
       id: "closeup",
       label: "Close-up View",
-      src: "assets/tshirt-placeholder.jpg",
-      alt: "Close-up view of the SNJ T-shirt design fabric and print detail",
-      available: false
+      src: "assets/tshirt-collar-closeup.jpg",
+      alt: "Close-up view of the SNJ T-shirt collar and fabric detail",
+      available: true
     }
   ]
 };

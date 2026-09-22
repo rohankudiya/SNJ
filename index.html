@@ -87,6 +87,31 @@
           <!-- populated by script.js from assets/config.js -->
         </div>
       </div>
+
+      <div class="admin-panel" id="adminPanel" hidden>
+        <div class="admin-panel-inner">
+          <h3>Admin: Update Preview Photos</h3>
+          <p class="admin-hint">Uploading a photo here replaces it for every visitor immediately — no redeploy needed.</p>
+
+          <div class="admin-upload-row">
+            <label for="adminFileFront">Front View</label>
+            <input type="file" accept="image/*" id="adminFileFront" class="admin-file-input" data-admin-id="front">
+            <span class="admin-upload-status" data-admin-status="front"></span>
+          </div>
+          <div class="admin-upload-row">
+            <label for="adminFileBack">Back View</label>
+            <input type="file" accept="image/*" id="adminFileBack" class="admin-file-input" data-admin-id="back">
+            <span class="admin-upload-status" data-admin-status="back"></span>
+          </div>
+          <div class="admin-upload-row">
+            <label for="adminFileCloseup">Close-up View</label>
+            <input type="file" accept="image/*" id="adminFileCloseup" class="admin-file-input" data-admin-id="closeup">
+            <span class="admin-upload-status" data-admin-status="closeup"></span>
+          </div>
+
+          <button type="button" class="btn btn-secondary admin-close-btn" id="adminCloseBtn">Close</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -330,11 +355,13 @@
     <p class="footer-copyright">&copy; <span id="footerYear"></span> सिध्दार्थ नगरची जगदंबा. All rights reserved.</p>
     <p class="footer-privacy">Your information will only be used for T-shirt size collection.</p>
     <p class="footer-contact">Questions? Contact: <a href="mailto:contact@example.com">contact@example.com</a></p>
+    <button type="button" class="admin-trigger-btn" id="adminTriggerBtn">Admin</button>
   </div>
 </footer>
 
 <script src="assets/config.js"></script>
 <script src="assets/submission-config.js"></script>
+<script src="assets/admin-config.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

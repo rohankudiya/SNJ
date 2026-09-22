@@ -468,6 +468,53 @@ select:focus-visible,
   .gallery-thumbs { overflow-x: visible; flex-wrap: wrap; }
 }
 
+/* ---------- Admin photo-upload panel ---------- */
+.admin-panel {
+  margin-top: 20px;
+  background: var(--navy-900);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+.admin-panel-inner h3 { color: var(--white); font-size: 1.05rem; }
+.admin-hint { color: rgba(255, 255, 255, 0.7); font-size: 0.85rem; margin-top: 6px; }
+.admin-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.admin-upload-row label {
+  color: var(--white);
+  font-weight: 600;
+  font-size: 0.9rem;
+  min-width: 100px;
+}
+.admin-upload-row input[type="file"] {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.82rem;
+  max-width: 100%;
+}
+.admin-upload-status {
+  color: var(--saffron-500);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.admin-close-btn { margin-top: 18px; }
+
+.footer-admin { margin-top: 4px; }
+.admin-trigger-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+.admin-trigger-btn:hover, .admin-trigger-btn:focus-visible { color: rgba(255, 255, 255, 0.7); }
+
 /* ---------- Lightbox ---------- */
 .lightbox {
   position: fixed;

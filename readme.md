@@ -17,10 +17,13 @@ SNJ/
 ├── assets/
 │   ├── config.js                   Single source of truth for all preview image paths
 │   ├── submission-config.js        Where the form sends data (your SheetDB API URL)
+│   ├── admin-config.js             Passcode + ImgBB key for the live Admin upload panel
 │   ├── jagdamb-logo-header.png     Small logo used in header/footer
 │   ├── jagdamb-logo-hero.png       Larger logo used in the hero section
 │   ├── tshirt-placeholder.jpg      Default placeholder image
-│   ├── tshirt-back.jpg             Back-view gallery image
+│   ├── tshirt-front-photo.jpg      Front-view gallery image
+│   ├── tshirt-back-photo.jpg       Back-view gallery image
+│   ├── tshirt-collar-closeup.jpg   Close-up gallery image
 │   └── README.txt                  Short notes on replacing images
 └── README.md                       This file
 ```
@@ -152,7 +155,44 @@ prompts to click through.
 
 ---
 
-## 6. Where to view submissions — and why it's one row per person
+## 6. Updating preview photos live from the website (Admin panel)
+
+Normally, changing a preview photo means editing `assets/config.js` and
+redeploying (sections 2–3). There's also a faster path built into the site
+itself: a passcode-gated **Admin** panel that uploads a new photo straight
+from your browser and makes it live for every visitor immediately — no
+code edit, no redeploy.
+
+**One-time setup (~5 minutes):**
+1. Copy [`assets/admin-config.example.js`](assets/admin-config.example.js)
+   to `assets/admin-config.js` (gitignored, like `submission-config.js`).
+2. Pick a passcode and set `window.ADMIN_PASSCODE` in that file.
+3. Sign up free at [api.imgbb.com](https://api.imgbb.com/) and paste your
+   key into `window.IMGBB_API_KEY` — this is the free image host the
+   Admin panel uploads photos to.
+4. In the **same Google Sheet** SheetDB is already connected to, add a new
+   tab named exactly `ImageConfig` with header row `id | url`, and three
+   rows below it in the `id` column: `front`, `back`, `closeup` (leave
+   `url` blank — the Admin panel fills it in on first upload).
+5. Save and redeploy manually (drag-and-drop) — like
+   `submission-config.js`, this file is gitignored, so a Git-connected
+   Netlify deploy won't include it.
+
+**Using it:** scroll to the footer and click the small **Admin** link,
+enter your passcode, then pick a photo for Front / Back / Close-up. The
+site resizes and compresses it in your browser, uploads it to ImgBB, saves
+the URL to the `ImageConfig` sheet, and every visitor's next page load
+picks it up automatically.
+
+> **Security note:** this is a static site with no server, so the passcode
+> lives in plain JavaScript that anyone can read via "View Source" or
+> DevTools on the live site — it's a casual deterrent, not real
+> authentication. Don't reuse a real password here, and treat this as
+> "keeps casual visitors out," not "cryptographically locked to only you."
+
+---
+
+## 7. Where to view submissions — and why it's one row per person
 
 Just open your Google Sheet — submissions appear directly as new rows,
 no dashboard or export step needed.
@@ -172,7 +212,7 @@ Sheet is only visible to people you've shared it with.
 
 ---
 
-## 7. How to export or share the data
+## 8. How to export or share the data
 
 It's already a Google Sheet, so:
 - **CSV/Excel**: File → Download → choose your format.
@@ -182,7 +222,7 @@ It's already a Google Sheet, so:
 
 ---
 
-## 8. How to get notified of new submissions
+## 9. How to get notified of new submissions
 
 Google Sheets has this built in — no code needed:
 **Tools → Notification rules** (or **Notification settings**, depending on
@@ -191,7 +231,7 @@ want to be emailed.
 
 ---
 
-## 9. How to change website text and colors
+## 10. How to change website text and colors
 
 **Text:** All copy lives directly in [`index.html`](index.html) — headings,
 button labels, the hero paragraph, the privacy note, footer text, etc. Edit
@@ -221,7 +261,7 @@ directly in `index.html`.
 
 ---
 
-## 10. How T-shirt size selection works
+## 11. How T-shirt size selection works
 
 Every person on the form (you, and each family member added) picks their
 size from **one unified chip grid** — no separate "exact vs. age" choice.
@@ -252,7 +292,7 @@ which letter size fits them.
 
 ---
 
-## 11. Adding multiple family members
+## 12. Adding multiple family members
 
 "Your Details" is required and always a single person. Family members are
 **entirely optional** — you can submit with just your own details, or add

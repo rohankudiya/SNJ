@@ -700,6 +700,182 @@
     }, { passive: true });
   })();
 
+  /* ============================================================
+     Admin: live photo upload (passcode-gated)
+     Lets the site owner replace T-shirt preview photos from the live
+     site itself, with the change visible to every visitor immediately.
+     Uploads go to ImgBB (free image host); the returned URL is saved
+     into an "ImageConfig" tab of the same Google Sheet used for
+     submissions (via SheetDB), which every visitor's browser reads on
+     page load. See assets/admin-config.example.js for setup and an
+     important security note about the passcode.
+     ============================================================ */
+  var adminTriggerBtn = document.getElementById("adminTriggerBtn");
+  var adminPanel = document.getElementById("adminPanel");
+  var adminCloseBtn = document.getElementById("adminCloseBtn");
+  var adminUnlocked = false;
+
+  function fetchImageOverrides() {
+    var endpoint = window.SUBMISSION_ENDPOINT;
+    if (!endpoint) return;
+
+    fetch(endpoint + "?sheet=ImageConfig")
+      .then(function (res) { return res.ok ? res.json() : []; })
+      .then(function (rows) {
+        if (!Array.isArray(rows) || !rows.length) return;
+        var byId = {};
+        rows.forEach(function (row) {
+          if (row.id && row.url) byId[row.id] = row.url;
+        });
+        var changed = false;
+        images.forEach(function (img) {
+          if (byId[img.id]) {
+            img.src = byId[img.id];
+            img.available = true;
+            changed = true;
+          }
+        });
+        if (changed) {
+          renderThumbs();
+          setActiveIndex(activeIndex);
+        }
+      })
+      .catch(function () {
+        // ImageConfig sheet/tab not set up yet, or request failed — keep
+        // showing the defaults from assets/config.js.
+      });
+  }
+
+  // Downscales + compresses the picked file client-side before upload, so
+  // a phone photo doesn't become a multi-MB request.
+  function resizeImageFile(file, maxDim, quality) {
+    return new Promise(function (resolve, reject) {
+      var img = new Image();
+      var url = URL.createObjectURL(file);
+      img.onload = function () {
+        var scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+        var w = Math.round(img.width * scale);
+        var h = Math.round(img.height * scale);
+        var canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+        URL.revokeObjectURL(url);
+        canvas.toBlob(function (blob) {
+          if (blob) resolve(blob); else reject(new Error("Could not process that image."));
+        }, "image/jpeg", quality);
+      };
+      img.onerror = function () {
+        URL.revokeObjectURL(url);
+        reject(new Error("Could not read that file."));
+      };
+      img.src = url;
+    });
+  }
+
+  function blobToBase64(blob) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () {
+        // ImgBB wants the raw base64 payload, without the "data:...;base64," prefix.
+        resolve(String(reader.result).split(",")[1]);
+      };
+      reader.onerror = function () { reject(new Error("Could not read that file.")); };
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  function uploadToImgbb(blob) {
+    var apiKey = window.IMGBB_API_KEY;
+    if (!apiKey || apiKey.indexOf("your-imgbb") === 0) {
+      return Promise.reject(new Error("ImgBB API key isn't configured yet (assets/admin-config.js)."));
+    }
+    return blobToBase64(blob).then(function (base64) {
+      var body = new URLSearchParams();
+      body.set("key", apiKey);
+      body.set("image", base64);
+      return fetch("https://api.imgbb.com/1/upload", { method: "POST", body: body });
+    }).then(function (res) {
+      return res.json();
+    }).then(function (json) {
+      if (!json || !json.data || !json.data.url) {
+        throw new Error("ImgBB upload failed.");
+      }
+      return json.data.url;
+    });
+  }
+
+  function saveImageUrl(id, url) {
+    var endpoint = window.SUBMISSION_ENDPOINT;
+    if (!endpoint) return Promise.reject(new Error("Submission endpoint isn't configured yet."));
+
+    return fetch(endpoint + "/id/" + id + "?sheet=ImageConfig", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: { url: url } })
+    }).then(function (res) {
+      if (!res.ok) throw new Error("Could not save the new photo (" + res.status + ").");
+    });
+  }
+
+  function handleAdminFileChange(event) {
+    var input = event.target;
+    var id = input.getAttribute("data-admin-id");
+    var statusEl = document.querySelector('[data-admin-status="' + id + '"]');
+    var file = input.files && input.files[0];
+    if (!file) return;
+
+    if (statusEl) statusEl.textContent = "Uploading…";
+
+    resizeImageFile(file, 1200, 0.82)
+      .then(uploadToImgbb)
+      .then(function (url) {
+        return saveImageUrl(id, url).then(function () { return url; });
+      })
+      .then(function (url) {
+        images.forEach(function (img) {
+          if (img.id === id) {
+            img.src = url;
+            img.available = true;
+          }
+        });
+        renderThumbs();
+        setActiveIndex(activeIndex);
+        if (statusEl) statusEl.textContent = "Updated — live for everyone now.";
+      })
+      .catch(function (err) {
+        if (statusEl) statusEl.textContent = "Failed: " + err.message;
+      })
+      .finally(function () {
+        input.value = "";
+      });
+  }
+
+  if (adminTriggerBtn && adminPanel) {
+    adminTriggerBtn.addEventListener("click", function () {
+      if (!adminUnlocked) {
+        var entered = window.prompt("Admin passcode:");
+        if (entered === null) return;
+        if (!window.ADMIN_PASSCODE || entered !== window.ADMIN_PASSCODE) {
+          window.alert("Incorrect passcode.");
+          return;
+        }
+        adminUnlocked = true;
+      }
+      adminPanel.hidden = false;
+      adminPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
+  if (adminCloseBtn && adminPanel) {
+    adminCloseBtn.addEventListener("click", function () {
+      adminPanel.hidden = true;
+    });
+  }
+  document.querySelectorAll(".admin-file-input").forEach(function (input) {
+    input.addEventListener("change", handleAdminFileChange);
+  });
+
   renderThumbs();
   setActiveIndex(0);
+  fetchImageOverrides();
 })();
