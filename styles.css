@@ -186,7 +186,15 @@ select:focus-visible,
 
 .primary-nav {
   position: fixed;
-  inset: 68px 0 0 0;
+  top: 68px;
+  left: 0;
+  right: 0;
+  /* Explicit viewport-relative height instead of relying on inset's
+     implicit top+bottom sizing: .site-header's backdrop-filter creates a
+     new containing block for this fixed element, so a bottom:0-based
+     height would resolve against the header's own ~68px box (collapsing
+     to 0) instead of the actual viewport. */
+  height: calc(100vh - 68px);
   background: var(--navy-900);
   transform: translateX(100%);
   transition: transform var(--dur-med) var(--ease);
@@ -221,7 +229,10 @@ select:focus-visible,
     position: static;
     background: transparent;
     transform: none;
-    inset: auto;
+    top: auto;
+    left: auto;
+    right: auto;
+    height: auto;
     overflow: visible;
   }
   .primary-nav ul { flex-direction: row; padding: 0; gap: 6px; align-items: center; }
