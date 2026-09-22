@@ -53,6 +53,20 @@ window.TSHIRT_IMAGE_CONFIG = {
       src: "assets/tshirt-collar-closeup.jpg",
       alt: "Close-up view of the SNJ T-shirt collar and fabric detail",
       available: true
+    },
+    {
+      id: "sleeve",
+      label: "Sleeve Cuff Detail",
+      src: "assets/tshirt-sleeve-cuff-detail.jpg",
+      alt: "Close-up of the SNJ T-shirt sleeve cuff, turquoise with white stripe",
+      available: true
+    },
+    {
+      id: "fabric",
+      label: "Fabric View",
+      src: "assets/tshirt-fabric-view.jpg",
+      alt: "Close-up of the SNJ T-shirt pique fabric texture",
+      available: true
     }
   ]
 };
